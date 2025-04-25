@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Circuitos RLC</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Análisis de Circuitos RLC</h1>
+        <p>Area de ciencia y tecnologia</p>
+        <p>Circuitos electronicos</p>
+    </header>
+
+    <div class="container">
+        <div class="input-section">
+            <h2>Parámetros del Circuito</h2>
+            <label for="circuitType">Tipo de Circuito:</label>
+            <select id="circuitType">
+                <option value="series">Serie</option>
+                <option value="parallel">Paralelo</option>
+            </select>
+
+            <label for="resistance">Resistencia (R) en Ω:</label>
+            <input type="number" id="resistance" value="1000" step="any">
+
+            <label for="inductance">Inductancia (L) en H:</label>
+            <input type="number" id="inductance" value="0.1" step="any">
+
+            <label for="capacitance">Capacitancia (C) en F:</label>
+            <input type="number" id="capacitance" value="0.00001" step="any">
+
+            <label for="voltage">Voltaje de Fuente (V) en V:</label>
+            <input type="number" id="voltage" value="10" step="any">
+
+            <label for="frequency">Frecuencia (f) en Hz:</label>
+            <input type="number" id="frequency" value="1000" step="any">
+
+            <button onclick="calculateRLC()">Calcular</button>
+        </div>
+
+        <div class="results-section">
+            <h2>Resultados</h2>
+            <div id="results" class="results">
+                <!-- Los resultados se mostrarán aquí -->
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('formulas')">Fórmulas</div>
+                <div class="tab" onclick="showTab('comparison')">Comparación</div>
+            </div>
+
+            <div id="formulas" class="tab-content active">
+                <h3>Fórmulas Utilizadas</h3>
+                <div class="formula-box">
+                    <p><strong>Frecuencia de Resonancia:</strong></p>
+                    <p>f₀ = 1 / (2π√(LC))</p>
+                </div>
+                <div class="formula-box">
+                    <p><strong>Reactancia Inductiva (Xₗ):</strong></p>
+                    <p>Xₗ = 2πfL</p>
+                </div>
+                <div class="formula-box">
+                    <p><strong>Reactancia Capacitiva (X꜀):</strong></p>
+                    <p>X꜀ = 1 / (2πfC)</p>
+                </div>
+                <div class="formula-box">
+                    <p><strong>Impedancia en Serie (Z):</strong></p>
+                    <p>Z = √(R² + (Xₗ - X꜀)²)</p>
+                </div>
+                <div class="formula-box">
+                    <p><strong>Impedancia en Paralelo (Z):</strong></p>
+                    <p>1/Z = √((1/R)² + (1/X꜀ - 1/Xₗ)²)</p>
+                </div>
+            </div>
+
+            <div id="comparison" class="tab-content">
+                <h3>Comparación RLC Serie vs. Paralelo</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Característica</th>
+                        <th>RLC Serie</th>
+                        <th>RLC Paralelo</th>
+                    </tr>
+                    <tr>
+                        <td>Configuración de Componentes</td>
+                        <td>Conectados en línea</td>
+                        <td>Conectados en ramas paralelas</td>
+                    </tr>
+                    <tr>
+                        <td>Fuente</td>
+                        <td>Fuente de voltaje</td>
+                        <td>Fuente de corriente</td>
+                    </tr>
+                    <tr>
+                        <td>Impedancia Total (Z)</td>
+                        <td>Mínima en resonancia</td>
+                        <td>Máxima en resonancia</td>
+                    </tr>
+                    <tr>
+                        <td>Corriente</td>
+                        <td>Máxima en resonancia</td>
+                        <td>Mínima en resonancia</td>
+                    </tr>
+                    <tr>
+                        <td>Aplicaciones típicas</td>
+                        <td>Sintonización de frecuencias</td>
+                        <td>Filtros de rechazo de banda</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="graph-section">
+        <h2>Respuesta Temporal del Circuito</h2>
+        <div class="chart-container">
+            <canvas id="responseChart"></canvas>
+        </div>
+        <div id="dampingInfo" style="margin-top: 20px;"></div>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>
